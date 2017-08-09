@@ -1,0 +1,60 @@
+[#import dg_1: decision-graph.dg]
+[#import dg_3: decision-graph-3.dg ]
+
+[>nd-1< ask:
+  {text: Were the legitimate expectations of society for an increase of knowledge taken into consideration, and a transfer only made on this basis?}
+  {answers:
+    {Yes: [ask:
+            {text: Did you, the controller, inform the supervisory authority and the data subject about the transfer?}
+            {answers:
+              {Yes: [call: dg_1>nd-2]}
+              {No:  [reject: NO TAG POSSIBLE.
+                    Cannot be (re)used.]}
+            }
+          ]
+    }
+    {No:  [reject: NO TAG POSSIBLE.
+          Cannot be (re)used.]}
+  }
+]
+
+[>nd-2< ask:
+  {text:Did the consent have any restrictions? (i.e. they are sensitive data so cannot be published openly)
+        [article 9]}
+  {answers:
+    {Yes: [ask:
+            {text: Were the data further processed for archiving in the public interest}
+            {answers:
+              {Yes: [>nd-5< ask:
+                      {text: Does the data contain highly sensitive information?
+                            [article 9]}
+                      {answers:
+                        {Yes: [call: dg_3>nd-1]}
+                        {No:  [call: dg_3>nd-2]}
+                      }
+                    ]
+              }
+              {No:  [ask:
+                      {text: Were the data processed for scientific or historical research purpose or statistical purpose?}
+                      {answers:
+                        {Yes: [ask:
+                                {text: Did the data subject have the right to object to the processing of personal data concerning him or her?
+                                      [article 9]}
+                                {answers:
+                                  {Yes: [call: nd-5]}
+                                  {No:  [reject: NO TAG POSSIBLE.
+                                        Cannot be (re)used.]}
+                                }
+                              ]
+                        }
+                        {No:  [reject: NO TAG POSSIBLE.
+                              Cannot be (re)used.]}
+                      }
+                    ]
+              }
+            }
+          ]
+    }
+    {No:  [set: ColorTag = Green]}
+  }
+]

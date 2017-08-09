@@ -1,0 +1,1 @@
+Were the data further processed for archiving in the public interest. scientific or historical research purposes ot statistical purposes?

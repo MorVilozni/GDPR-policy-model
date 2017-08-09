@@ -1,0 +1,96 @@
+[>nd-1< ask:
+  {text: Is the data further processed in a way which is incompatible with the original purpose?
+          [article 5]}
+  {answers:
+    {Yes: [ask:
+            {text: Is the further processed instead for Journalistic, academic, literary or artistic purpose?
+                    [article 85]}
+            {answers:
+              {Yes: [>nd-4< ask:
+                      {text: Are there appropriate safeguards in place to ensure data minimisation?
+                      [article 89 & 5]}
+                      {answers:
+                        {Yes: [set: ColorTag = Red]}
+                        {No:  [reject: NO TAG POSSIBLE.
+                              Cannot be (re)used.]}
+                      }
+                    ]}
+              {No:  [ask:
+                      {text: Is this further processing instead consistent with Union or Member state law for other special cases?
+                      [rectial 52]}
+                      {answers:
+                        {Yes: [call: nd-4]}
+                        {No:  [reject: NO TAG POSSIBLE.
+                              Cannot be (re)used.]}
+                      }
+                    ]}
+            }
+          ]
+    }
+    {No:  [ask:
+            {text: Does the data contain information about genetics, biometrics or health?
+                    [recital 53]}
+            {answers:
+              {Yes: [ask:
+                      {text: Is any processing therefore consistent with Member state further conditions and limitations for this type of processing?
+                      [recital 53]}
+                      {answers:
+                        {Yes: [call: nd-4]}
+                        {No: [reject: NO TAG POSSIBLE.
+                              Cannot be (re)used.]}
+                      }
+                    ]}
+              {No:  [call: nd-4]}
+            }
+          ]
+    }
+  }
+]
+[>nd-2< ask:
+  {text: Is the data further processed in a way which is incompatible with the original purpose?
+          [article 5]}
+  {answers:
+    {Yes: [ask:
+            {text: Is the further processed instead for Journalistic, academic, literary or artistic purpose?
+                    [article 85]}
+            {answers:
+              {Yes: [>nd-3< ask:
+                      {text: Are there appropriate safeguards in place to ensure data minimisation?
+                      [article 89 & 5]}
+                      {answers:
+                        {Yes: [set: ColorTag = Yellow]}
+                        {No: [reject: NO TAG POSSIBLE.
+                              Cannot be (re)used.]}
+                      }
+                    ]}
+              {No:  [ask:
+                      {text: Is this further processing instead consistent with Union or Member state law for other special cases?
+                      [recital 52]}
+                      {answers:
+                        {Yes: [call: nd-3]}
+                        {No:  [reject: NO TAG POSSIBLE.
+                              Cannot be (re)used.]}
+                      }
+                    ]}
+            }
+          ]
+    }
+    {No:  [ask:
+            {text: Does the data contain information about genetics, biometrics or health?
+                    [recital 53]}
+            {answers:
+              {Yes: [ask:
+                      {text: Is any processing therefore consistent with Member state further conditions and limitations for this type of processing?
+                      [recital 53]}
+                      {answers:
+                        {Yes: [call: nd-3]}
+                        {No:  [reject: NO TAG POSSIBLE.
+                              Cannot be (re)used.]}
+                      }
+                    ]}
+              {No:  [call: nd-3]}
+            }
+
+    ]}
+  }
+]

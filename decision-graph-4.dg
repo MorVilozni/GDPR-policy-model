@@ -1,0 +1,83 @@
+[#import dg_2: decision-graph-2.dg]
+
+[>nd-1< ask:
+  {text: Were the data further processed for archiving in the public interest. scientific or historical research purposes ot statistical purposes?}
+  {answers:
+    {Yes: [ask:
+            {text: In cases where it was not possible to fully identify the purpose of personal data processing, did the subjects give consent to certain areas of the research which met recognised ethical standarts?
+            [rectial 33]}
+            {answers:
+              {Yes: [call: dg_2>nd-2]}
+              {No:  [ask:
+                      {text: Were the data subjects below the age of 16?
+                      [article 8]}
+                      {answers:
+                        {Yes: [ask:
+                                {text: Was informed parental consent obtained or authorised by the holder of parental responsibility of the child?
+                                [article 8]}
+                                {answers:
+                                  {Yes: [call: dg_2>nd-2]}
+                                  {No:  [>nd-2< ask:
+                                          {text: Does the data contain sensitive information?
+                                          [article 9]}
+                                          {answers:
+                                            {Yes: [ask:
+                                                    {text: Does the data contain highly sensitive information?
+                                                    [DANS addition]}
+                                                    {answers:
+                                                      {Yes: [reject: NO TAG POSSIBLE.
+                                                            Cannot be (re)used.]}
+                                                      {No:  [ask:
+                                                              {text: Is the data further processed in a way which is incompatible with the original purpose?
+                                                              [article 5]}
+                                                              {answers:
+                                                                {Yes: [reject: NO TAG POSSIBLE.
+                                                                      Cannot be (re)used.]}
+                                                                {No:  [ask:
+                                                                        {text: Are there appropriate safeguards in place to ensure data minimisation?
+                                                                        [article 89 & 5]}
+                                                                        {answers:
+                                                                          {Yes: [set: ColorTag = Red]}
+                                                                          {No: [reject: NO TAG POSSIBLE.
+                                                                                Cannot be (re)used.]}
+                                                                        }
+                                                                      ]}
+                                                              }
+                                                            ]}
+                                                    }
+                                                  ]}
+                                            {No: [>nd-3< ask:
+                                                    {text: Is the data further processed in a way which is incompatible with the original purpose?
+                                                    [article 5]}
+                                                    {answers:
+                                                      {Yes: [reject: NO TAG POSSIBLE.
+                                                            Cannot be (re)used.]}
+                                                      {No: [ask:
+                                                            {text: Are there appropriate safeguards in place to ensure data minimisation?
+                                                            [article 89 & 5]}
+                                                            {answers:
+                                                              {Yes: [set: ColorTag = Yellow]}
+                                                              {No:  [reject: NO TAG POSSIBLE.
+                                                                    Cannot be (re)used.]}
+                                                            }
+                                                          ]}
+                                                    }
+                                            ]}
+                                          }
+                                        ]}}]}
+                        {No:  [ask:
+                                {text: Is the processing of this data necessary for reasons of public interest in the areas of public health?
+                                [article 9, rectail 54]}
+                                {answers:
+                                  {Yes: [call: nd-3]}
+                                  {No:  [call: nd-2]}
+                                }
+                              ]}
+                          }
+                    ]}
+            }
+          ]}
+    {No: [reject: NO TAG POSSIBLE.
+          Cannot be (re)used.]}
+  }
+]

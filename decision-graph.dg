@@ -1,0 +1,68 @@
+[#import dg_2:  decision-graph-2.dg]
+[#import dg_4: decision-graph-4.dg]
+
+[>nd-1< ask:
+  {text: Are you the data producer or researcher associated with this dataset?}
+  {answers:
+    {Yes: [>nd-3< ask:
+            {text: Does the data contain personal information?}
+            {answers:
+              {Yes: [>nd-2<ask:
+                      {text: Did the data subject give informed consent?
+                    [article 7, recital 32]}
+                      {answers:
+                        {Yes: [call: dg_2>nd-2]}
+                        {No:  [call: dg_4>nd-1]}
+                      }
+                    ]
+              }
+              {No:  [set: ColorTag = Blue]}
+            }
+          ]
+    }
+    {No:  [ask:
+            {text: Are you the data depositor, archive or data management staff?}
+            {answers:
+              {Yes: [ask:
+                      {text: Does the data contain personal information?}
+                      {answers:
+                        {Yes: [ask:
+                                {text: Are you the controller?}
+                                {answers:
+                                  {Yes: [ask:
+                                          {text: Has the data been transferred to a third party country or international organisation?
+                                          [article 49]}
+                                          {answers:
+                                            {Yes: [call: dg_2>nd-1]}
+                                            {No:  [call: nd-2]}
+                                          }
+                                        ]
+                                  }
+                                  {No:  [ask:
+                                          {text: Are you the processor?}
+                                          {answers:
+                                            {Yes: [ask:
+                                                    {text: Was there a contract which bound the processor to the controller in regards to the condition of processing?}
+                                                    {answers:
+                                                      {Yes: [call: nd-2]}
+                                                      {No:  [reject: NO TAG POSSIBLE.
+                                                            Cannot be (re)used.]}
+                                                    }
+                                                  ]
+                                              }
+                                            {No:  [reject: This part has not been taken care of]}}
+                                        ]
+                                  }
+                                }
+                              ]
+                        }
+                        {No: [set: ColorTag = Blue]}
+                      }
+                    ]
+              }
+              {No:  [reject: This part has not been taken care of]}
+            }
+          ]
+    }
+  }
+]
